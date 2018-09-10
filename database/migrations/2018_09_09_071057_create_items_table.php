@@ -13,7 +13,25 @@ class CreateItemsTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('items', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->float('unit_price');
+            $table->unsignedInteger('id_category');
+            $table->unsignedInteger('quantity');
+            $table->unsignedInteger('id_uom');
+            $table->string('description')->nullable();
+            $table->timestamps();
+
+            $table->engine = "InnoDB";
+        });
+
+
+        Schema::table('items', function ($table) {
+            $table->foreign('id_category')->references('id')->on('categories');
+            $table->foreign('id_uom')->references('id')->on('uom');
+        });
+
     }
 
     /**
