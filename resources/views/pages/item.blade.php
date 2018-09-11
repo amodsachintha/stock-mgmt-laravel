@@ -85,7 +85,7 @@
                                             <th colspan="5" style="text-align:center">Ledger Records for {{$item->name}}</th>
                                         </tr>
                                         <tr>
-                                            <th style="text-align: center">id</th>
+                                            <th style="text-align: center">ledger id</th>
                                             <th style="text-align: center">category</th>
                                             <th style="text-align: center">quantity</th>
                                             <th style="text-align: center">person</th>
@@ -99,7 +99,7 @@
                                             @else
                                                 <tr class="bg-danger">
                                                     @endif
-                                                    <td>{{$line->id}}</td>
+                                                    <td><a href="#" onclick="pop('/ledger/view?id={{$line->id}}','{{$line->id}}')">{{$line->id}}</a></td>
                                                     <td>{{$line->cat_name}}</td>
                                                     @if($line->in == true)
                                                         <td>+ {{$line->quantity}} {{$line->uom}}</td>
@@ -115,6 +115,11 @@
                                 @endif
                             </div>
                         </div>
+            </div>
+            <div class="hidden-print" align="center" style="margin-top: 15px">
+                @if(isset($_SERVER['HTTP_REFERER']))
+                    <a href="{{$_SERVER['HTTP_REFERER']}}" class="btn btn-default">Back</a>
+                @endif
             </div>
         </div>
         <script type="text/javascript">
@@ -160,6 +165,14 @@
 
                 };
                 ajax.send('item_id=' + item_id + '&_token={{csrf_token()}}');
+            }
+
+            function pop(url, name) {
+                var newwindow = window.open(url, name, 'height=800,width=700');
+                if (window.focus) {
+                    newwindow.focus()
+                }
+                return false;
             }
         </script>
 

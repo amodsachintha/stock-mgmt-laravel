@@ -26,7 +26,7 @@ class LedgerController extends Controller
                 'data' => $this->getLedgerForCurrentMonth(intval($month)),
                 'totals' => $this->getTotals(intval($month)),
                 'month' => date('F Y', $date),
-                'months'=>$months,
+                'months' => $months,
             ]);
         else
             return view('pages.ledger', ['data' => $this->getLedger(), 'paginate' => true]);
@@ -78,6 +78,26 @@ class LedgerController extends Controller
             'issue_total' => number_format($issues_total->total, 2),
             'restock_total' => number_format($restock_total->total, 2)
         ];
+    }
+
+    public function showLedgerEntry(Request $request)
+    {
+        $id = $request->get('id');
+        $entry = DB::table('ledger')
+            ->join('items', 'ledger.id_item', '=', 'items.id')
+            ->join('categories', 'ledger.id_category', '=', 'categories.id')
+            ->join('uom', 'items.id_uom', '=', 'uom.id')
+            ->select('ledger.*','items.name as item_name','categories.name as cat','items.unit_price as price','uom.name as uom')
+            ->where('ledger.id', $id)
+            ->first();
+
+//        return response()->json($entry);
+
+        if ($entry->in == 0) { // issue
+            return view('pages.ledger_entry', ['entry' => $entry, 'issue' => true]);
+        } else { // restock
+            return view('pages.ledger_entry', ['entry' => $entry, 'issue' => false]);
+        }
     }
 
 

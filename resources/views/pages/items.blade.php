@@ -42,7 +42,7 @@
 
 
         <div class="row">
-            <div class="col-md-8 col-md-offset-2">
+            <div class="col-md-10 col-md-offset-1">
                 <table class="table" style="-webkit-filter: drop-shadow(1px 2px 2px gray); margin: 2px; background-color: #fffffe">
                     <thead>
                     <tr>
@@ -51,6 +51,8 @@
                         <th style="text-align: center">unit price RS</th>
                         <th style="text-align: center">category</th>
                         <th style="text-align: center">quantity</th>
+                        <th style="text-align: center">Restock</th>
+                        <th style="text-align: center">Issue</th>
                     </tr>
                     </thead>
                     <tbody style="text-align: center">
@@ -64,16 +66,18 @@
                                 <tr style="background-color: #27AE60; color: black">
                                     @endif
                                     <td>{{$item->id}}</td>
-                                    <td><a href="#" style="color: #1c242a;" onclick="return pop('/item/show/{{$item->id}}','{{$item->name}}')">{{$item->name}}</a></td>
+                                    <td><a href="/item/show/{{$item->id}}" style="color: #1c242a;" >{{$item->name}}</a></td>
                                     <td>{{$item->unit_price}}</td>
                                     <td><kbd>{{$item->cat}}</kbd></td>
                                     <td><code>{{$item->quantity}} {{$item->uom}}</code></td>
+                                    <td><button class="btn btn-primary" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')">Restock</button></td>
+                                    <td><button class="btn btn-danger" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')">Issue</button></td>
                                 </tr>
                                 @endforeach
                             @endif
                             @if(!isset($_GET['category']))
                                 <tr class="hidden-print">
-                                    <td colspan="5" align="center">
+                                    <td colspan="7" align="center">
                                         {{$items->links()}}
                                     </td>
                                 </tr>

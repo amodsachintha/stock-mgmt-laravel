@@ -178,4 +178,98 @@ class ItemsController extends Controller
     }
 
 
+    public function showRestock(Request $request)
+    {
+        $id = intval($request->get('id'));
+        $item = DB::table('items')
+            ->where('id', $id)
+            ->first();
+
+        return view('pages.restock', ['item' => $item]);
+    }
+
+
+    public function showIssue(Request $request)
+    {
+        $id = intval($request->get('id'));
+        $item = DB::table('items')
+            ->where('id', $id)
+            ->first();
+
+        return view('pages.issue', ['item' => $item]);
+    }
+
+    public function issue(Request $request)
+    {
+//        return response()->json($request->all());
+        $id_item = $request->get('id_item');
+        $id_category = $request->get('id_category');
+        $quantity = intval($request->get('quantity'));
+        $purpose = $request->get('purpose');
+        $person = $request->get('person');
+        $approved_by = $request->get('approved_by');
+        $full_quantity = $request->get('full_quantity');
+
+        DB::table('ledger')
+            ->insert([
+                'in' => false,
+                'id_item' => $id_item,
+                'id_category' => $id_category,
+                'quantity' => $quantity,
+                'purpose' => $purpose,
+                'person' => $person,
+                'approved_by' => $approved_by,
+            ]);
+
+        DB::table('items')
+            ->where('id', $id_item)
+            ->update([
+                'quantity' => ($full_quantity - $quantity)
+            ]);
+
+        $l = DB::table('ledger')
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        return redirect('/ledger/view?id=' . $l->id);
+    }
+
+    public function restock(Request $request)
+    {
+//        return response()->json($request->all());
+        $id_item = $request->get('id_item');
+        $id_category = $request->get('id_category');
+        $quantity = intval($request->get('quantity'));
+        $reciept_no = $request->get('reciept_no');
+//        $purpose = $request->get('purpose');
+        $person = $request->get('person');
+        $approved_by = $request->get('approved_by');
+        $full_quantity = $request->get('full_quantity');
+
+        DB::table('ledger')
+            ->insert([
+                'in' => true,
+                'id_item' => $id_item,
+                'id_category' => $id_category,
+                'quantity' => $quantity,
+                'reciept_no' => $reciept_no,
+//                'purpose' => $purpose,
+                'person' => $person,
+                'approved_by' => $approved_by,
+            ]);
+
+        DB::table('items')
+            ->where('id', $id_item)
+            ->update([
+                'quantity' => ($full_quantity + $quantity)
+            ]);
+
+        $l = DB::table('ledger')
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        return redirect('/ledger/view?id=' . $l->id);
+    }
+
+
 }

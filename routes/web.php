@@ -28,7 +28,10 @@ Route::post('/item/add','ItemsController@addItem');
 Route::post('/item/update','ItemsController@updateItem');
 Route::post('/item/delete','ItemsController@deleteItem');
 Route::get('/items/search','ItemsController@search');
-
+Route::get('/item/restock','ItemsController@showRestock');
+Route::get('/item/issue','ItemsController@showIssue');
+Route::post('/item/issue','ItemsController@issue');
+Route::post('/item/restock','ItemsController@restock');
 
 
 // CATEGORIES CONTROLLER //
@@ -39,6 +42,7 @@ Route::post('/categories/add','CategoriesController@add');
 
 // LEDGER CONTROLLER //
 Route::get('/ledger','LedgerController@index');
+Route::get('/ledger/view','LedgerController@showLedgerEntry');
 
 
 
