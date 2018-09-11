@@ -23,16 +23,24 @@ Route::get('/home', 'HomeController@index')->name('home');
 // ITEMS CONTROLLER //
 Route::get('/items/all','ItemsController@index');
 Route::get('/item/show/{id}','ItemsController@showItem');
+Route::get('/item/add','ItemsController@showAdd');
+Route::post('/item/add','ItemsController@addItem');
 Route::post('/item/update','ItemsController@updateItem');
 Route::post('/item/delete','ItemsController@deleteItem');
+Route::get('/items/search','ItemsController@search');
+
+
 
 // CATEGORIES CONTROLLER //
 Route::get('/categories/all','CategoriesController@index');
 Route::post('/categories/add','CategoriesController@add');
 
 
+
 // LEDGER CONTROLLER //
 Route::get('/ledger','LedgerController@index');
+
+
 
 // TEST //
 Route::get('/test','LedgerController@getTotals');

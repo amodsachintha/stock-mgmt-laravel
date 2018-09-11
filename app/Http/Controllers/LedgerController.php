@@ -56,7 +56,7 @@ class LedgerController extends Controller
             ->paginate(20);
     }
 
-    public function getTotals($month)
+    private function getTotals($month)
     {
         $issues_total = DB::table('ledger')
             ->join('items', 'ledger.id_item', '=', 'items.id')

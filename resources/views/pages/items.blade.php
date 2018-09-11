@@ -1,7 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" style="font-family: sans-serif">
+    <div class="container" style="font-family: sans-serif; margin-bottom: 30px">
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2" style="margin-bottom: 10px" align="center">
+                <form class="form-inline" method="GET" action="/items/search">
+                    <div class="form-group">
+                        <label for="search">Search</label>
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Search...">
+                    </div>
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category" name="category" class="form-control">
+                            @foreach($cats as $cat)
+                                <option value="{{$cat->name}}">{{$cat->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2" style="margin-bottom: 10px" align="center">
+                @if(isset($_GET['category']) && isset($_GET['search']))
+                    @if($_GET['search'] != "")
+                        <div class="alert alert-success">
+                            <p>Showing results for "<strong>{{$_GET['search']}}</strong>" in <strong>{{$_GET['category']}}</strong></p>
+                        </div>
+                    @else
+                        <div class="alert alert-success">
+                            <p>Showing results in <strong>{{$_GET['category']}}</strong></p>
+                        </div>
+                    @endif
+                @endif
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <table class="table" style="-webkit-filter: drop-shadow(1px 2px 2px gray); margin: 2px; background-color: #fffffe">
@@ -25,18 +64,20 @@
                                 <tr style="background-color: #27AE60; color: black">
                                     @endif
                                     <td>{{$item->id}}</td>
-                                    <td><a href="#" style="color: #1c242a;" onclick="return pop('/item/show/{{$item->id}}','{{$item->name}}')" >{{$item->name}}</a></td>
+                                    <td><a href="#" style="color: #1c242a;" onclick="return pop('/item/show/{{$item->id}}','{{$item->name}}')">{{$item->name}}</a></td>
                                     <td>{{$item->unit_price}}</td>
                                     <td><kbd>{{$item->cat}}</kbd></td>
                                     <td><code>{{$item->quantity}} {{$item->uom}}</code></td>
                                 </tr>
                                 @endforeach
                             @endif
-                            <tr class="hidden-print">
-                                <td colspan="5" align="center">
-                                    {{$items->links()}}
-                                </td>
-                            </tr>
+                            @if(!isset($_GET['category']))
+                                <tr class="hidden-print">
+                                    <td colspan="5" align="center">
+                                        {{$items->links()}}
+                                    </td>
+                                </tr>
+                            @endif
                     </tbody>
                 </table>
             </div>

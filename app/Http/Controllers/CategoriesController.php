@@ -23,6 +23,7 @@ class CategoriesController extends Controller
         foreach ($cats as $cat) {
             $val = DB::table('items')
                 ->where('id_category', $cat->id)
+                ->where('deleted',false)
                 ->count();
             array_push($counts, [
                 'category' => $cat->name,

@@ -53,7 +53,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/items/all">View All</a></li>
-                                <li><a href="/items/add">Add Item</a></li>
+                                <li><a href="/item/add">Add Item</a></li>
                             </ul>
                         </li>
                         <li><a href="/categories/all"><strong>Categories</strong></a></li>
