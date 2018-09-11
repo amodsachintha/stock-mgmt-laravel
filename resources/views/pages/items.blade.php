@@ -25,7 +25,7 @@
                                 <tr style="background-color: #27AE60; color: black">
                                     @endif
                                     <td>{{$item->id}}</td>
-                                    <td><a href="/item/show/{{$item->id}}" style="color: #1c242a;" class="links_c">{{$item->name}}</a></td>
+                                    <td><a href="#" style="color: #1c242a;" onclick="return pop('/item/show/{{$item->id}}','{{$item->name}}')" >{{$item->name}}</a></td>
                                     <td>{{$item->unit_price}}</td>
                                     <td><kbd>{{$item->cat}}</kbd></td>
                                     <td><code>{{$item->quantity}} {{$item->uom}}</code></td>
@@ -43,5 +43,13 @@
         </div>
     </div>
 
-
+    <script type="text/javascript">
+        function pop(url, name) {
+            var newwindow = window.open(url, name, 'height=800,width=700');
+            if (window.focus) {
+                newwindow.focus()
+            }
+            return false;
+        }
+    </script>
 @endsection

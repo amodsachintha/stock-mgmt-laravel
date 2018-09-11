@@ -23,9 +23,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 // ITEMS CONTROLLER //
 Route::get('/items/all','ItemsController@index');
 Route::get('/item/show/{id}','ItemsController@showItem');
+Route::post('/item/update','ItemsController@updateItem');
+Route::post('/item/delete','ItemsController@deleteItem');
 
 // CATEGORIES CONTROLLER //
-//Route::get('/categories/all')
+Route::get('/categories/all','CategoriesController@index');
+Route::post('/categories/add','CategoriesController@add');
 
 
 // LEDGER CONTROLLER //

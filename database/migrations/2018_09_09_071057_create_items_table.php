@@ -23,6 +23,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('quantity');
             $table->unsignedInteger('id_uom');
             $table->string('description')->nullable();
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
 
             $table->engine = "InnoDB";
