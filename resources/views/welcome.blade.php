@@ -8,14 +8,15 @@
         <title>Laravel</title>
 
         <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+        {{--<link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">--}}
 
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
+                /*background-color: #fff;*/
+                background-image: url("{{asset('img/background.png')}}");
+                color: #0d1216;
+                font-family: sans-serif;
                 font-weight: 100;
                 height: 100vh;
                 margin: 0;
@@ -50,9 +51,19 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #b21400;
                 padding: 0 25px;
-                font-size: 12px;
+                font-size: 15px;
+                font-weight: 600;
+                letter-spacing: .1rem;
+                text-decoration: none;
+                text-transform: uppercase;
+            }
+
+            .links > a:hover {
+                color: #0565b2;
+                padding: 0 25px;
+                font-size: 16px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
@@ -66,28 +77,34 @@
     </head>
     <body>
         <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        <a href="{{ url('/register') }}">Register</a>
-                    @endif
-                </div>
-            @endif
+            {{--@if (Route::has('login'))--}}
+                {{--<div class="top-right links">--}}
+                    {{--@if (Auth::check())--}}
+                        {{--<a href="{{ url('/home') }}">Home</a>--}}
+                    {{--@else--}}
+                        {{--<a href="{{ url('/login') }}">Login</a>--}}
+                        {{--<a href="{{ url('/register') }}">Register</a>--}}
+                    {{--@endif--}}
+                {{--</div>--}}
+            {{--@endif--}}
 
-            <div class="content">
+            <div class="content" style="margin-top: -80px">
                 <div class="title m-b-md">
-                    Laravel
-                </div>
+                    <img src="{{asset('img/logo_text.png')}}" width="700">
 
+                </div>
+                <div style="margin-top: -50px; margin-bottom: 50px">
+                    <h1>තොග කළමනාකරණ පද්ධතිය</h1>
+                </div>
                 <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                    @if (Route::has('login'))
+                            @if (Auth::check())
+                                <a href="{{ url('/home') }}">Home</a>
+                            @else
+                                <a href="{{ url('/login') }}">Login</a>
+                                <a href="{{ url('/register') }}">Register</a>
+                            @endif
+                    @endif
                 </div>
             </div>
         </div>

@@ -17,6 +17,8 @@ class CreateItemsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->float('unit_price');
+            $table->integer('low'); //stock level - low
+            $table->integer('medium'); //stock level - medium
             $table->unsignedInteger('id_category');
             $table->unsignedInteger('quantity');
             $table->unsignedInteger('id_uom');

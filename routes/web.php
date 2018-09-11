@@ -18,3 +18,19 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// ITEMS CONTROLLER //
+Route::get('/items/all','ItemsController@index');
+Route::get('/item/show/{id}','ItemsController@showItem');
+
+// CATEGORIES CONTROLLER //
+//Route::get('/categories/all')
+
+
+// LEDGER CONTROLLER //
+Route::get('/ledger','LedgerController@index');
+
+// TEST //
+Route::get('/test','LedgerController@getTotals');
+
