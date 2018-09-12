@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container" style="font-family: sans-serif">
+    <div class="container" style="font-family: sans-serif; margin-bottom: 10px">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 @if(isset($item))
@@ -61,14 +61,18 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                            <tr align="center">
-                                                <td align="right">
+                                            <tr>
+                                                <td>
                                                     <button class="btn btn-primary" onclick="if(confirm('Are you sure?')) updateItem();">Update</button>
                                                 </td>
                                                 <td align="center">
-                                                    <button class="btn btn-success">Restock</button>
+                                                    <button class="btn btn-warning" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')"
+                                                            style="width: 80px; color: black; margin-right: 20px;">Issue
+                                                    </button>
+                                                    <button class="btn btn-success" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')" style="color: black; margin-left: 20px;">Restock
+                                                    </button>
                                                 </td>
-                                                <td align="left">
+                                                <td align="right">
                                                     <button class="btn btn-danger" onclick="if(confirm('Are you sure?')) deleteItem();">Delete</button>
                                                 </td>
                                             </tr>
@@ -82,13 +86,14 @@
                                     <table class="table" style="-webkit-filter: drop-shadow(1px 2px 2px gray); margin: 2px; background-color: #fffffe">
                                         <thead>
                                         <tr>
-                                            <th colspan="5" style="text-align:center">Ledger Records for {{$item->name}}</th>
+                                            <th colspan="6" style="text-align:center">Ledger Records for {{$item->name}}</th>
                                         </tr>
                                         <tr>
                                             <th style="text-align: center">ledger id</th>
                                             <th style="text-align: center">category</th>
                                             <th style="text-align: center">quantity</th>
                                             <th style="text-align: center">person</th>
+                                            <th style="text-align: center">price</th>
                                             <th style="text-align: center">date</th>
                                         </tr>
                                         </thead>
@@ -100,23 +105,35 @@
                                                 <tr class="bg-danger">
                                                     @endif
                                                     <td><a href="#" onclick="pop('/ledger/view?id={{$line->id}}','{{$line->id}}')">{{$line->id}}</a></td>
-                                                    <td>{{$line->cat_name}}</td>
+                                                    <td><kbd>{{$line->cat_name}}</kbd></td>
                                                     @if($line->in == true)
                                                         <td>+ {{$line->quantity}} {{$line->uom}}</td>
                                                     @else
                                                         <td>- {{$line->quantity}} {{$line->uom}}</td>
                                                     @endif
                                                     <td>{{$line->person}}</td>
+                                                    <td>Rs. {{number_format($line->quantity * $line->price,2)}}</td>
                                                     <td>{{date('d M Y',strtotime($line->date_time))}}</td>
                                                 </tr>
                                                 @endforeach
+                                                <tr>
+                                                    <td colspan="5" style="text-align: right">Issue Cost:</td>
+                                                    <td>Rs. {{number_format($issue_cost->total,2)}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" style="text-align: right">Restock Cost:</td>
+                                                    <td>Rs. {{number_format($restock_cost->total,2)}}</td>
+                                                </tr>
+                                            <tr align="center">
+                                                <td colspan="6">{{$ledgerRecs->links()}}</td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 @endif
                             </div>
                         </div>
             </div>
-            <div class="hidden-print" align="center" style="margin-top: 15px">
+            <div class="hidden-print" align="center" style="margin-top: 15px; margin-bottom: 20px">
                 @if(isset($_SERVER['HTTP_REFERER']))
                     <a href="{{$_SERVER['HTTP_REFERER']}}" class="btn btn-default">Back</a>
                 @endif

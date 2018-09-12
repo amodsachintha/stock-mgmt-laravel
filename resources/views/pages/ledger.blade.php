@@ -43,7 +43,7 @@
                                     @endif
                                     <td>{{$line->id}}</td>
                                     <td><a href="/item/show/{{$line->id_item}}">{{$line->item_name}}</a></td>
-                                    <td>{{$line->cat_name}}</td>
+                                    <td><kbd>{{$line->cat_name}}</kbd></td>
                                     @if($line->in == true)
                                         <td>+ {{$line->quantity}} {{$line->uom}}</td>
                                     @else
@@ -77,7 +77,7 @@
     </div>
     <script type="text/javascript">
         function pop(url, name) {
-            var newwindow = window.open(url, name, 'height=800,width=700');
+            var newwindow = window.open(url, name, 'height=700,width=700');
             if (window.focus) {
                 newwindow.focus()
             }

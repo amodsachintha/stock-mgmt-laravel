@@ -51,14 +51,34 @@ class ItemsController extends Controller
             ->join('items', 'ledger.id_item', '=', 'items.id')
             ->join('categories', 'ledger.id_category', '=', 'categories.id')
             ->join('uom', 'items.id_uom', '=', 'uom.id')
-            ->select('ledger.*', 'items.name as item_name', 'categories.name as cat_name', 'uom.name as uom')
+            ->select('ledger.*', 'items.name as item_name', 'categories.name as cat_name', 'uom.name as uom', 'items.unit_price as price')
             ->where('id_item', $id)
             ->where('deleted', false)
-            ->get();
+            ->orderBy('ledger.id','DESC')
+            ->paginate(2);
 
-//        return response()->json($ledgerRecords);
+        $issue_cost = DB::table('ledger')
+            ->join('items', 'ledger.id_item', '=', 'items.id')
+            ->where('id_item', $id)
+            ->where('in', false)
+            ->select(DB::raw('sum((ledger.quantity * items.unit_price)) as total'))
+            ->first();
 
-        return view('pages.item', ['item' => $item, 'ledgerRecs' => $ledgerRecords]);
+        $restock_cost = DB::table('ledger')
+            ->join('items', 'ledger.id_item', '=', 'items.id')
+            ->where('id_item', $id)
+            ->where('in', true)
+            ->select(DB::raw('sum((ledger.quantity * items.unit_price)) as total'))
+            ->first();
+
+//        return response()->json($restock_cost);
+
+        return view('pages.item', [
+            'item' => $item,
+            'ledgerRecs' => $ledgerRecords,
+            'issue_cost' => $issue_cost,
+            'restock_cost' => $restock_cost,
+        ]);
     }
 
 
