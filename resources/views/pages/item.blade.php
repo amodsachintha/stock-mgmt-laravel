@@ -62,15 +62,24 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                                <td>Issuance Cost ({{date('M')}}):</td>
+                                                <td colspan="2"><strong>Rs. {{number_format($issue_cost->total,2)}}</strong></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Purchase Cost ({{date('M')}}):</td>
+                                                <td colspan="2"><strong>Rs. {{number_format($restock_cost->total,2)}}</strong></td>
+                                            </tr>
+                                            <tr>
                                                 <td>
                                                     <button class="btn btn-primary" onclick="if(confirm('Are you sure?')) updateItem();">Update</button>
                                                 </td>
                                                 <td align="center">
-                                                    <button class="btn btn-warning" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')"
-                                                            style="width: 80px; color: black; margin-right: 20px;">Issue
-                                                    </button>
-                                                    <button class="btn btn-success" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')" style="color: black; margin-left: 20px;">Restock
-                                                    </button>
+                                                    @if($item->quantity == 0)
+                                                    <button class="btn btn-warning"  style="width: 80px; color: black; margin-right: 20px;" disabled>Issue</button>
+                                                    @else
+                                                        <button class="btn btn-warning" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')" style="width: 80px; color: black; margin-right: 20px;">Issue</button>
+                                                    @endif
+                                                    <button class="btn btn-success" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')" style="color: black; margin-left: 20px;">Restock</button>
                                                 </td>
                                                 <td align="right">
                                                     <button class="btn btn-danger" onclick="if(confirm('Are you sure?')) deleteItem();">Delete</button>
@@ -112,18 +121,10 @@
                                                         <td>- {{$line->quantity}} {{$line->uom}}</td>
                                                     @endif
                                                     <td>{{$line->person}}</td>
-                                                    <td>Rs. {{number_format($line->quantity * $line->price,2)}}</td>
+                                                    <td>Rs. {{number_format(($line->quantity * $line->price),2)}}</td>
                                                     <td>{{date('d M Y',strtotime($line->date_time))}}</td>
                                                 </tr>
                                                 @endforeach
-                                                <tr>
-                                                    <td colspan="5" style="text-align: right">Issue Cost:</td>
-                                                    <td>Rs. {{number_format($issue_cost->total,2)}}</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="5" style="text-align: right">Restock Cost:</td>
-                                                    <td>Rs. {{number_format($restock_cost->total,2)}}</td>
-                                                </tr>
                                             <tr align="center">
                                                 <td colspan="6">{{$ledgerRecs->links()}}</td>
                                             </tr>

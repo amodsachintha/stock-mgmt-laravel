@@ -23,7 +23,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <form action="/item/add" method="POST">
                     <div class="form-group">
-                        <label>Name</label>
+                        <label>Item name</label>
                         <input class="form-control" type="text" id="name" name="name" required>
                     </div>
 
@@ -38,11 +38,12 @@
 
                     <div class="form-group">
                         <label>Unit of Measure (UOM)</label>
-                        <select name="id_uom" class="form-control" required>
+                        <input type="text" name="uom" class="form-control" list="uoms" required>
+                        <datalist id="uoms">
                             @foreach($uoms as $uom)
-                                <option value="{{$uom->id}}">{{$uom->name}}</option>
+                                <option>{{$uom->name}}</option>
                             @endforeach
-                        </select>
+                        </datalist>
                     </div>
 
                     <div class="form-group">
@@ -51,12 +52,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Low Threshold</label>
+                        <label>Low level</label>
                         <input class="form-control" type="number" name="low" min="1" value="10" required>
                     </div>
 
                     <div class="form-group">
-                        <label>Medium Threshold</label>
+                        <label>Medium level</label>
                         <input class="form-control" type="number" name="medium" min="1" value="30" required>
                     </div>
 

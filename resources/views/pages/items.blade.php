@@ -8,7 +8,7 @@
                 <form class="form-inline" method="GET" action="/items/search">
                     <div class="form-group">
                         <label for="search">Search</label>
-                        <input type="text" class="form-control" id="search" name="search" placeholder="Search...">
+                        <input type="text" class="form-control" id="search" name="search" placeholder="Item name...">
                     </div>
                     <div class="form-group">
                         <label for="category">Category</label>
@@ -46,7 +46,7 @@
                 <table class="table" style="-webkit-filter: drop-shadow(1px 2px 2px gray); margin: 2px; background-color: #fffffe">
                     <thead>
                     <tr>
-                        <th style="text-align: center">id</th>
+                        <th style="text-align: center"> </th>
                         <th style="text-align: center">name</th>
                         <th style="text-align: center">unit price RS</th>
                         <th style="text-align: center">category</th>
@@ -66,12 +66,22 @@
                                 <tr style="background-color: #27AE60; color: black">
                                     @endif
                                     <td>{{$item->id}}</td>
-                                    <td><a href="/item/show/{{$item->id}}" style="color: #1c242a;" >{{$item->name}}</a></td>
+                                    <td><a href="/item/show/{{$item->id}}" style="color: #1c242a;">{{$item->name}}</a></td>
                                     <td>{{$item->unit_price}}</td>
                                     <td><kbd>{{$item->cat}}</kbd></td>
                                     <td><code>{{$item->quantity}} {{$item->uom}}</code></td>
-                                    <td><button class="btn btn-primary" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')">Restock</button></td>
-                                    <td><button class="btn btn-danger" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')">Issue</button></td>
+                                    <td>
+                                        <button class="btn btn-primary" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')">Restock</button>
+                                    </td>
+                                    @if($item->quantity == 0)
+                                        <td>
+                                            <button class="btn btn-danger" disabled="">Issue</button>
+                                        </td>
+                                    @else
+                                        <td>
+                                            <button class="btn btn-danger" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')">Issue</button>
+                                        </td>
+                                    @endif
                                 </tr>
                                 @endforeach
                             @endif

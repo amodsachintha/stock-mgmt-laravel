@@ -32,6 +32,7 @@ Route::get('/item/restock','ItemsController@showRestock');
 Route::get('/item/issue','ItemsController@showIssue');
 Route::post('/item/issue','ItemsController@issue');
 Route::post('/item/restock','ItemsController@restock');
+Route::get('/deleted-items','ItemsController@showDeleted');
 
 
 // CATEGORIES CONTROLLER //

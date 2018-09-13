@@ -5,7 +5,7 @@
     <div class="container" style="font-family: sans-serif; margin-bottom: 50px">
         @if(isset($months))
             <div class="row" style="margin-bottom: 20px">
-                <div class="col-md-10 col-md-offset-1" align="center">
+                <div class="col-md-10 col-md-offset-1 hidden-print" align="center">
                     <div class="btn-group" role="group">
                         @foreach($months as $m)
                             <a href="/ledger?month={{$loop->iteration}}" type="button" class="btn btn-primary">{{$m}}</a>
@@ -57,12 +57,12 @@
                             @endif
                             @if(isset($totals))
                                 <tr>
-                                    <td colspan="6" style="text-align: right"><h4>Issuance cost</h4></td>
-                                    <td colspan="1" style="color: #c7254e"><h4>Rs {{$totals['issue_total']}}</h4></td>
+                                    <td colspan="5" style="text-align: right"><h4>Issuance cost</h4></td>
+                                    <td colspan="2" style="color: #c7254e"><h4>Rs {{$totals['issue_total']}}</h4></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="6" style="text-align: right"><h4>Restock cost</h4></td>
-                                    <td colspan="1" style="color: #559756"><h4>Rs {{$totals['restock_total']}}</h4></td>
+                                    <td colspan="5" style="text-align: right"><h4>Purchase cost</h4></td>
+                                    <td colspan="2" style="color: #559756"><h4>Rs {{$totals['restock_total']}}</h4></td>
                                 </tr>
                             @endif
                             @if(isset($paginate))
@@ -74,6 +74,9 @@
                 </table>
             </div>
         </div>
+            <div class="hidden-print" align="center" style="margin-top: 15px; margin-bottom: 20px">
+                    <a href="#" class="btn btn-default" onclick="window.print();">Print</a>
+            </div>
     </div>
     <script type="text/javascript">
         function pop(url, name) {

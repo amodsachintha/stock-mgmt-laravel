@@ -1,61 +1,38 @@
 @extends('layouts.app')
 @section('content')
-    @if(isset($counts))
-        <script src="{{asset('js/Chart.min.js')}}"></script>
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2" align="center">
-                <div id="canvas-holder" style="width: 80%">
-                    <canvas id="chart-area"></canvas>
-                </div>
-
+    <div class="container">
+        <div class="row" style="font-family: sans-serif">
+            <div class="col-md-6 col-md-offset-3">
+                <table class="table table-hover" style="-webkit-filter: drop-shadow(1px 2px 2px gray); background-color: #fffffe">
+                    <thead>
+                    <tr>
+                        <th style="text-align: center">Category name</th>
+                        <th style="text-align: center">No. of items</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($counts as $count)
+                        <tr>
+                            <td style="text-align: center"><a href="/items/search?search=&category={{$count['cat']}}">{{$count['cat']}}</a></td>
+                            <td style="text-align: center">{{$count['count']}}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
 
-        <script>
-            var config = {
-                type: 'bar',
-                data: {
-                    datasets: [{
-                        data: [
-                            @foreach($counts as $count)
-                            {{intval($count['count'])}},
-                            @endforeach
-                        ],
-                        backgroundColor: [
-                            @foreach($counts as $count)
-                                '#' + (Math.random() * 0xFFFFFF << 0).toString(16),
-                            @endforeach
-                        ],
-                        label: 'Categories'
-                    }],
-                    labels: [
-                        @foreach($counts as $count)
-                            '{{strval($count['category'])}}',
-                        @endforeach
-                    ]
-                },
-                options: {
-                    responsive: true
-                }
-            };
 
-            window.onload = function () {
-                var ctx = document.getElementById('chart-area').getContext('2d');
-                window.myPie = new Chart(ctx, config);
-            };
-        </script>
-    @endif
-
-    <div class="row" style="margin-top: 30px">
-        <div class="col-md-4 col-md-offset-4" align="center">
-            <div class="form-group">
-                <label>Add New Category</label>
-                <input class="form-control" type="text" id="category" placeholder="new category..." required>
+        <div class="row" style="margin-top: 30px">
+            <div class="col-md-4 col-md-offset-4" align="center">
+                <div class="form-group">
+                    <label>Add New Category</label>
+                    <input class="form-control" type="text" id="category" placeholder="new category..." required>
+                </div>
+                <button class="btn btn-primary" onclick="if(confirm('Are you sure?')) addNewCategory()">Submit</button>
             </div>
-            <button class="btn btn-primary" onclick="if(confirm('Are you sure?')) addNewCategory()">Submit</button>
         </div>
     </div>
-
     <script type="text/javascript">
         function addNewCategory() {
             var cat = document.getElementById('category').value;

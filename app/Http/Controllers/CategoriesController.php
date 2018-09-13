@@ -15,25 +15,25 @@ class CategoriesController extends Controller
 
     public function index()
     {
+        return view('pages.categories',['counts'=>$this->getCounts($this->getCategories())]);
+    }
 
-        $cats = DB::table('categories')
-            ->get();
+    private function getCategories(){
+        return DB::table('categories')
+                ->orderBy('id','ASC')
+                ->get();
+    }
 
-        $counts = [];
-        foreach ($cats as $cat) {
-            $val = DB::table('items')
-                ->where('id_category', $cat->id)
+    public function getCounts($categories){
+        $counts=[];
+        foreach ($categories as $category){
+            $c = DB::table('items')
+                ->where('id_category',$category->id)
                 ->where('deleted',false)
                 ->count();
-            array_push($counts, [
-                'category' => $cat->name,
-                'count' => $val
-            ]);
+            array_push($counts,['cat'=>$category->name,'count'=>$c]);
         }
-
-        return view('pages.categories', [
-            'counts' => $counts,
-        ]);
+        return $counts;
     }
 
 

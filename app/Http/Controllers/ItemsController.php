@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -24,7 +25,7 @@ class ItemsController extends Controller
             ->join('uom', 'items.id_uom', '=', 'uom.id')
             ->select('items.*', 'categories.name as cat', 'uom.name as uom')
             ->where('deleted', false)
-            ->orderBy('items.id', 'ASC')
+            ->orderBy('items.id', 'DESC')
             ->paginate(18);
     }
 
@@ -54,13 +55,15 @@ class ItemsController extends Controller
             ->select('ledger.*', 'items.name as item_name', 'categories.name as cat_name', 'uom.name as uom', 'items.unit_price as price')
             ->where('id_item', $id)
             ->where('deleted', false)
-            ->orderBy('ledger.id','DESC')
-            ->paginate(2);
+            ->orderBy('ledger.id', 'DESC')
+            ->paginate(15);
 
         $issue_cost = DB::table('ledger')
             ->join('items', 'ledger.id_item', '=', 'items.id')
             ->where('id_item', $id)
             ->where('in', false)
+            ->where('date_time','>=',date('Y-m-1'))
+            ->where('date_time','<=',date('Y-m-31'))
             ->select(DB::raw('sum((ledger.quantity * items.unit_price)) as total'))
             ->first();
 
@@ -68,10 +71,12 @@ class ItemsController extends Controller
             ->join('items', 'ledger.id_item', '=', 'items.id')
             ->where('id_item', $id)
             ->where('in', true)
+            ->where('date_time','>=',date('Y-m-1'))
+            ->where('date_time','<=',date('Y-m-31'))
             ->select(DB::raw('sum((ledger.quantity * items.unit_price)) as total'))
             ->first();
 
-//        return response()->json($restock_cost);
+//        return response()->json($issue_cost);
 
         return view('pages.item', [
             'item' => $item,
@@ -112,6 +117,7 @@ class ItemsController extends Controller
                 ->where('id', intval($item_id))
                 ->update([
                     'deleted' => true,
+                    'updated_at' => Carbon::now(),
                 ]);
 
             return response()->json(['status' => 'ok']);
@@ -138,18 +144,37 @@ class ItemsController extends Controller
 //        return response()->json($request->all());
         $name = $request->get('name');
         $id_category = $request->get('id_category');
-        $id_uom = $request->get('id_uom');
+        $uom = $request->get('uom');
         $unit_price = $request->get('unit_price');
         $low = $request->get('low');
         $medium = $request->get('medium');
         $description = $request->get('description');
 
         try {
+
+            $uom_row = DB::table('uom')
+                ->where('name', $uom)
+                ->first();
+
+            if ($uom_row == null) {
+                DB::table('uom')
+                    ->insert([
+                        'name' => $uom,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ]);
+
+                $uom_row = DB::table('uom')
+                    ->where('name', $uom)
+                    ->first();
+            }
+
+
             DB::table('items')
                 ->insert([
                     'name' => $name,
                     'id_category' => intval($id_category),
-                    'id_uom' => intval($id_uom),
+                    'id_uom' => intval($uom_row->id),
                     'unit_price' => floatval($unit_price),
                     'low' => intval($low),
                     'medium' => intval($medium),
@@ -179,7 +204,7 @@ class ItemsController extends Controller
                 ->select('items.*', 'categories.name as cat', 'uom.name as uom')
                 ->where('deleted', false)
                 ->where('categories.name', $category)
-                ->orderBy('items.id', 'ASC')
+                ->orderBy('items.id', 'DESC')
                 ->get();
         } else {
             $items = DB::table('items')
@@ -189,7 +214,7 @@ class ItemsController extends Controller
                 ->where('deleted', false)
                 ->where('items.name', 'like', '%' . $search . '%')
                 ->where('categories.name', $category)
-                ->orderBy('items.id', 'ASC')
+                ->orderBy('items.id', 'DESC')
                 ->get();
         }
 
@@ -289,6 +314,19 @@ class ItemsController extends Controller
             ->first();
 
         return redirect('/ledger/view?id=' . $l->id);
+    }
+
+
+    public function showDeleted()
+    {
+        $items = DB::table('items')
+            ->join('categories', 'items.id_category', '=', 'categories.id')
+            ->join('uom', 'items.id_uom', '=', 'uom.id')
+            ->select('items.*', 'categories.name as cat', 'uom.name as uom')
+            ->where('deleted', true)
+            ->paginate(20);
+
+        return view('pages.deleted_items', ['items' => $items]);
     }
 
 

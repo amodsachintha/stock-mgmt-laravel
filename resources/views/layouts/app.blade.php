@@ -13,9 +13,9 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body>
+<body style="background:#ffffff;">
 <div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top" style="background: rgb(252, 248, 227);">
         <div class="container">
             <div class="navbar-header">
 
@@ -29,7 +29,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    තොග කළමනාකරණ පද්ධතිය
+                    <p style="color: black"><img src="{{asset("img/logo.png")}}" height="40px" style="margin-top: -10px"><strong>&nbsp; තොග කළමනාකරණ පද්ධතිය</strong></p>
                 </a>
             </div>
 
@@ -40,7 +40,7 @@
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
+                <ul class="nav navbar-nav navbar-right" style="font-size: 16px">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ route('login') }}">Login</a></li>
@@ -60,7 +60,7 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <strong>Ledger</strong><span class="caret"></span>
+                                <strong>History</strong><span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
@@ -68,6 +68,9 @@
                                 </li>
                                 <li>
                                     <a href="/ledger">All Records</a>
+                                </li>
+                                <li>
+                                    <a href="/deleted-items">Deleted Items</a>
                                 </li>
                             </ul>
                         </li>
@@ -99,7 +102,11 @@
 
     @yield('content')
 </div>
-
+<footer class="footer" style="margin-top: 20px">
+    <div class="container" align="center">
+        <p class="small"><kbd>AI Software&reg; &copy;{{date('Y')}}</kbd> &nbsp;<code></code></p>
+    </div>
+</footer>
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 </body>
