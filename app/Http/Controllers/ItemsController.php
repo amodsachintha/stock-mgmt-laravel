@@ -45,7 +45,7 @@ class ItemsController extends Controller
             ->join('uom', 'items.id_uom', '=', 'uom.id')
             ->select('items.*', 'categories.name as cat', 'uom.name as uom')
             ->where('items.id', $id)
-            ->where('deleted', false)
+//            ->where('deleted', false)
             ->first();
 
         $ledgerRecords = DB::table('ledger')
@@ -54,7 +54,7 @@ class ItemsController extends Controller
             ->join('uom', 'items.id_uom', '=', 'uom.id')
             ->select('ledger.*', 'items.name as item_name', 'categories.name as cat_name', 'uom.name as uom', 'items.unit_price as price')
             ->where('id_item', $id)
-            ->where('deleted', false)
+//            ->where('deleted', false)
             ->orderBy('ledger.id', 'DESC')
             ->paginate(15);
 
@@ -99,6 +99,7 @@ class ItemsController extends Controller
                 ->update([
                     'low' => intval($low),
                     'medium' => intval($med),
+                    'updated_at' => Carbon::now(),
                 ]);
             return response()->json(['status' => 'ok']);
         } catch (\Exception $e) {
@@ -180,6 +181,8 @@ class ItemsController extends Controller
                     'medium' => intval($medium),
                     'quantity' => 0,
                     'description' => $description,
+                    'updated_at' => Carbon::now(),
+                    'created_at' => Carbon::now(),
                 ]);
 
             $id = DB::table('items')
@@ -264,6 +267,8 @@ class ItemsController extends Controller
                 'purpose' => $purpose,
                 'person' => $person,
                 'approved_by' => $approved_by,
+                'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now(),
             ]);
 
         DB::table('items')
@@ -301,6 +306,8 @@ class ItemsController extends Controller
 //                'purpose' => $purpose,
                 'person' => $person,
                 'approved_by' => $approved_by,
+                'updated_at' => Carbon::now(),
+                'created_at' => Carbon::now(),
             ]);
 
         DB::table('items')
@@ -324,6 +331,7 @@ class ItemsController extends Controller
             ->join('uom', 'items.id_uom', '=', 'uom.id')
             ->select('items.*', 'categories.name as cat', 'uom.name as uom')
             ->where('deleted', true)
+            ->orderBy('updated_at','DESC')
             ->paginate(20);
 
         return view('pages.deleted_items', ['items' => $items]);

@@ -32,7 +32,6 @@ class HomeController extends Controller
                 ->join('uom','items.id_uom','=','uom.id')
                 ->select('items.id','items.name','items.quantity','items.low','uom.name as uom')
                 ->where('deleted',false)
-                ->limit(100)
                 ->get();
 
         $itemsArray = [];

@@ -13,6 +13,7 @@
                                             @endif
                                             <h4>{{$item->name}}</h4>
                                             <h4>{{$item->quantity}} {{$item->uom}}</h4>
+                                            @if($item->deleted == true) <h4>DELETED</h4> @endif
                                         </div>
 
 
@@ -27,7 +28,7 @@
                                             </tr>
                                             <tr>
                                                 <td>Unit Price:</td>
-                                                <td colspan="2"><strong>Rs. {{$item->unit_price}}</strong></td>
+                                                <td colspan="2"><strong>Rs. {{number_format($item->unit_price,2)}}</strong></td>
                                             </tr>
                                             <tr>
                                                 <td>Quantity:</td>
@@ -47,7 +48,7 @@
                                                 <td>Low threshold value:</td>
                                                 <td colspan="2">
                                                     <div class="input-group" style="width: 30%">
-                                                        <input type="number" value="{{$item->low}}" id="low_t" class="form-control" aria-describedby="basic-addon2">
+                                                        <input type="number" value="{{$item->low}}" id="low_t" class="form-control" @if($item->deleted == true) disabled @endif aria-describedby="basic-addon2">
                                                         <span class="input-group-addon" id="basic-addon2">{{$item->uom}}</span>
                                                     </div>
                                                 </td>
@@ -56,7 +57,7 @@
                                                 <td>Medium threshold value:</td>
                                                 <td colspan="2">
                                                     <div class="input-group" style="width: 30%">
-                                                        <input type="number" value="{{$item->medium}}" id="med_t" class="form-control" aria-describedby="basic-addon3">
+                                                        <input type="number" value="{{$item->medium}}" id="med_t" class="form-control" @if($item->deleted == true) disabled @endif aria-describedby="basic-addon3">
                                                         <span class="input-group-addon" id="basic-addon3">{{$item->uom}}</span>
                                                     </div>
                                                 </td>
@@ -69,6 +70,7 @@
                                                 <td>Purchase Cost ({{date('M')}}):</td>
                                                 <td colspan="2"><strong>Rs. {{number_format($restock_cost->total,2)}}</strong></td>
                                             </tr>
+                                            @if($item->deleted != true)
                                             <tr>
                                                 <td>
                                                     <button class="btn btn-primary" onclick="if(confirm('Are you sure?')) updateItem();">Update</button>
@@ -85,6 +87,7 @@
                                                     <button class="btn btn-danger" onclick="if(confirm('Are you sure?')) deleteItem();">Delete</button>
                                                 </td>
                                             </tr>
+                                                @endif
                                         </table>
                                     @endif
                                 </div>
@@ -175,6 +178,7 @@
                     console.log(list);
                     if (list['status'] === 'ok') {
                         alert('Item Deleted successfully!');
+                        window.location.href='/items/all';
                         window.close();
                     }
                     else {

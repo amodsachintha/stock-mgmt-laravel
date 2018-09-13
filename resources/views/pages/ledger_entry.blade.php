@@ -31,7 +31,7 @@
                         </tr>
                         <tr style="background-color: #ef8b83">
                             <td>Total:</td>
-                            <td>Rs. {{$entry->quantity * $entry->price}}</td>
+                            <td>Rs. {{number_format($entry->quantity * $entry->price,2)}}</td>
                         </tr>
                         <tr>
                             <td>Person:</td>
@@ -93,7 +93,7 @@
                         </tr>
                         <tr style="background-color: #7bcb7c">
                             <td>Total:</td>
-                            <td>Rs. {{$entry->quantity * $entry->price}}</td>
+                            <td>Rs. {{number_format($entry->quantity * $entry->price,2)}}</td>
                         </tr>
                         <tr>
                             <td>Person:</td>

@@ -48,7 +48,7 @@
                     <tr>
                         <th style="text-align: center"> </th>
                         <th style="text-align: center">name</th>
-                        <th style="text-align: center">unit price RS</th>
+                        <th style="text-align: center">unit price (Rs)</th>
                         <th style="text-align: center">category</th>
                         <th style="text-align: center">quantity</th>
                         <th style="text-align: center">Restock</th>
@@ -67,7 +67,7 @@
                                     @endif
                                     <td>{{$item->id}}</td>
                                     <td><a href="/item/show/{{$item->id}}" style="color: #1c242a;">{{$item->name}}</a></td>
-                                    <td>{{$item->unit_price}}</td>
+                                    <td>{{number_format($item->unit_price,2)}}</td>
                                     <td><kbd>{{$item->cat}}</kbd></td>
                                     <td><code>{{$item->quantity}} {{$item->uom}}</code></td>
                                     <td>
