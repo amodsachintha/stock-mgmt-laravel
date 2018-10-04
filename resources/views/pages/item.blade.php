@@ -48,7 +48,7 @@
                                                 <td>Low threshold value:</td>
                                                 <td colspan="2">
                                                     <div class="input-group" style="width: 30%">
-                                                        <input type="number" value="{{$item->low}}" id="low_t" class="form-control" @if($item->deleted == true) disabled @endif aria-describedby="basic-addon2">
+                                                        <input type="number" value="{{$item->low}}" min="1" id="low_t" class="form-control" @if($item->deleted == true) disabled @endif aria-describedby="basic-addon2">
                                                         <span class="input-group-addon" id="basic-addon2">{{$item->uom}}</span>
                                                     </div>
                                                 </td>
@@ -57,7 +57,7 @@
                                                 <td>Medium threshold value:</td>
                                                 <td colspan="2">
                                                     <div class="input-group" style="width: 30%">
-                                                        <input type="number" value="{{$item->medium}}" id="med_t" class="form-control" @if($item->deleted == true) disabled @endif aria-describedby="basic-addon3">
+                                                        <input type="number" value="{{$item->medium}}" min="1" id="med_t" class="form-control" @if($item->deleted == true) disabled @endif aria-describedby="basic-addon3">
                                                         <span class="input-group-addon" id="basic-addon3">{{$item->uom}}</span>
                                                     </div>
                                                 </td>
