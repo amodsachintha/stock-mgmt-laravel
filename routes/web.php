@@ -44,9 +44,10 @@ Route::post('/categories/add','CategoriesController@add');
 // LEDGER CONTROLLER //
 Route::get('/ledger','LedgerController@index');
 Route::get('/ledger/view','LedgerController@showLedgerEntry');
-
+Route::get('/set/year','LedgerController@setSummaryYear');
+Route::get('/view/all','LedgerController@viewAllFromYear');
 
 
 // TEST //
-Route::get('/test','LedgerController@getTotals');
+//Route::get('/test','LedgerController@getTotals');
 

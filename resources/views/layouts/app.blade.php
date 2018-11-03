@@ -12,6 +12,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+
+    {{--DataTables--}}
+    <link rel="stylesheet" type="text/css" href="{{asset('datatables/datatables.min.css')}}"/>
+    <script type="text/javascript" src="{{asset('datatables/datatables.min.js')}}"></script>
+
+    <link rel="stylesheet" href="{{asset('fa/css/all.css')}}">
+
 </head>
 <body style="background:#ffffff;">
 <div id="app">
@@ -64,7 +73,7 @@
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li>
-                                    <a href="/ledger?month={{date('m')}}">{{date('F')}}</a>
+                                    <a href="/ledger?month={{date('m')}}&year={{date('Y')}}">{{date('F')}}</a>
                                 </li>
                                 <li>
                                     <a href="/ledger">All Records</a>
@@ -107,7 +116,6 @@
         <p class="small"><kbd>AI Software&reg; &copy;{{date('Y')}}</kbd> &nbsp;<code></code></p>
     </div>
 </footer>
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
+
 </body>
 </html>

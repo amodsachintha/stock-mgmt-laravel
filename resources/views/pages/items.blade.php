@@ -7,10 +7,12 @@
             <div class="col-md-8 col-md-offset-2" style="margin-bottom: 10px" align="center">
                 <form class="form-inline" method="GET" action="/items/search">
                     <div class="form-group">
+                        <i class="far fa-search"></i>
                         <label for="search">Search</label>
                         <input type="text" class="form-control" id="search" name="search" placeholder="Item name...">
                     </div>
                     <div class="form-group">
+                        <i class="far fa-cogs"></i>
                         <label for="category">Category</label>
                         <select id="category" name="category" class="form-control">
                             @foreach($cats as $cat)

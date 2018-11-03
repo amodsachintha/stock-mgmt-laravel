@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
@@ -24,7 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home',['items'=>$this->getStockLowItems()]);
+        return view('home',['data'=>$this->getStockLowItems()]);
     }
 
     private function getStockLowItems(){
@@ -35,14 +34,15 @@ class HomeController extends Controller
                 ->get();
 
         $itemsArray = [];
-
+        $i=0;
         foreach ($items as $item) {
             if($item->quantity <= $item->low){
                 array_push($itemsArray,$item);
+                $i++;
             }
         }
 
-        return $itemsArray;
+        return ['items'=>$itemsArray, 'count'=>$i];
 
     }
 
