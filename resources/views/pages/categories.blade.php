@@ -21,8 +21,6 @@
                                     <td style="text-align: center">Rs. {{number_format(doubleval($total['total']),2)}}</td>
                                 @endif
                             @endforeach
-                            @el
-
                         </tr>
                     @endforeach
                     </tbody>
