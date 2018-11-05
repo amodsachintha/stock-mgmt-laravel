@@ -8,6 +8,7 @@
                     <tr>
                         <th style="text-align: center">Category name</th>
                         <th style="text-align: center">No. of items</th>
+                        <th style="text-align: center">Total Value</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -15,6 +16,13 @@
                         <tr>
                             <td style="text-align: center"><a href="/items/search?search=&category={{$count['cat']}}">{{$count['cat']}}</a></td>
                             <td style="text-align: center">{{$count['count']}}</td>
+                            @foreach($totals as $total)
+                                @if($count['cat_id'] == $total['cat_id'])
+                                    <td style="text-align: center">Rs. {{number_format(doubleval($total['total']),2)}}</td>
+                                @endif
+                            @endforeach
+                            @el
+
                         </tr>
                     @endforeach
                     </tbody>

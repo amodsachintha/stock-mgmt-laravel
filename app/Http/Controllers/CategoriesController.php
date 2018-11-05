@@ -15,23 +15,44 @@ class CategoriesController extends Controller
 
     public function index()
     {
-        return view('pages.categories',['counts'=>$this->getCounts($this->getCategories())]);
+        return view('pages.categories', [
+            'counts' => $this->getCounts($this->getCategories()),
+            'totals' => $this->getCategoryValues()
+        ]);
     }
 
-    private function getCategories(){
+    private function getCategories()
+    {
         return DB::table('categories')
-                ->orderBy('id','ASC')
-                ->get();
+            ->orderBy('id', 'ASC')
+            ->get();
     }
 
-    public function getCounts($categories){
-        $counts=[];
-        foreach ($categories as $category){
+    public function getCategoryValues()
+    {
+        $values = [];
+        $tots = DB::table('items')
+            ->select(DB::raw('SUM(unit_price * quantity) as sum'), 'id_category')
+            ->groupBy('id_category')
+            ->get();
+
+        foreach ($tots as $tot) {
+            array_push($values, ['cat_id' => $tot->id_category, 'total' => $tot->sum]);
+        }
+
+        return $values;
+
+    }
+
+    public function getCounts($categories)
+    {
+        $counts = [];
+        foreach ($categories as $category) {
             $c = DB::table('items')
-                ->where('id_category',$category->id)
-                ->where('deleted',false)
+                ->where('id_category', $category->id)
+                ->where('deleted', false)
                 ->count();
-            array_push($counts,['cat'=>$category->name,'count'=>$c]);
+            array_push($counts, ['cat' => $category->name, 'cat_id' => $category->id, 'count' => $c]);
         }
         return $counts;
     }
@@ -52,10 +73,10 @@ class CategoriesController extends Controller
                     'updated_at' => Carbon::now(),
                 ]);
 
-            return response()->json(['status'=>'ok']);
+            return response()->json(['status' => 'ok']);
         }
 
-        return response()->json(['status'=>'fail']);
+        return response()->json(['status' => 'fail']);
     }
 
 
