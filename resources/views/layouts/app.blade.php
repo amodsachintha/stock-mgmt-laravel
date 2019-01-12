@@ -8,10 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>තොග කළමනාකරණ පද්ධතිය</title>
+    <title>I M S</title>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('css/spacelab.css') }}" rel="stylesheet">
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
 
@@ -22,9 +23,10 @@
     <link rel="stylesheet" href="{{asset('fa/css/all.css')}}">
 
 </head>
-<body style="background:#ffffff;">
+<body style="padding-bottom: 50px">
 <div id="app">
-    <nav class="navbar navbar-default navbar-static-top" style="background: rgb(252, 248, 227);">
+    <div class="container" style="margin-top: 8px">
+    <nav class="navbar navbar-default navbar-static-top" style="border-radius: 5px">
         <div class="container">
             <div class="navbar-header">
 
@@ -38,7 +40,7 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <p style="color: black"><img src="{{asset("img/logo.png")}}" height="40px" style="margin-top: -10px"><strong>&nbsp; තොග කළමනාකරණ පද්ධතිය</strong></p>
+                    <p style="color: black"><img src="{{asset("img/logo.png")}}" height="40px" style="margin-top: -10px"></p>
                 </a>
             </div>
 
@@ -49,7 +51,7 @@
                 </ul>
 
                 <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right" style="font-size: 16px">
+                <ul class="nav navbar-nav pull-right" style="margin-right: 20px">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
                         <li><a href="{{ route('login') }}">Login</a></li>
@@ -58,14 +60,14 @@
                         <li><a href="/home"><strong>Dashboard</strong></a></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <strong>Items</strong><span class="caret"></span>
+                                <span class="badge">{{\App\Item::where('deleted',false)->count()}}</span><strong> Items</strong><span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="/items/all">View All</a></li>
                                 <li><a href="/item/add">Add Item</a></li>
                             </ul>
                         </li>
-                        <li><a href="/categories/all"><strong>Categories</strong></a></li>
+                        <li><a href="/categories/all"><span class="badge">{{\App\Category::count()}}</span><strong> Categories</strong></a></li>
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -86,7 +88,7 @@
 
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->name }} <span class="caret"></span>
+                                <span class="far fa-user-alt"></span> {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
 
                             <ul class="dropdown-menu" role="menu">
@@ -108,14 +110,18 @@
             </div>
         </div>
     </nav>
+    </div>
 
     @yield('content')
-</div>
-<footer class="footer" style="margin-top: 20px">
-    <div class="container" align="center">
-        <p class="small"><kbd>AI Software&reg; &copy;{{date('Y')}}</kbd> &nbsp;<code></code></p>
+    <div class="container">
+        <nav class="nav navbar-fixed-bottom" style="background-color: white; border-top: black">
+            <div class="container" align="center" style="margin-bottom: 5px;">
+                <p><span class="label label-default">amodsachintha&reg; &copy;{{date('Y')}}</span></p>
+            </div>
+        </nav>
     </div>
-</footer>
+
+</div>
 
 </body>
 </html>

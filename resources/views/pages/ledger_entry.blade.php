@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container" style="font-family: sans-serif; color: black">
+    <div class="container" style="color: #151515">
         @if($entry->in == 0)
             <div class="row">
                 <div class="col-md-8 col-md-offset-2">

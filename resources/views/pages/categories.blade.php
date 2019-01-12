@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="row" style="font-family: sans-serif">
+        <div class="row">
             <div class="col-md-6 col-md-offset-3">
-                <table class="table table-hover" style="-webkit-filter: drop-shadow(1px 2px 2px gray); background-color: #fffffe">
+                <table class="table table-bordered">
                     <thead>
                     <tr>
                         <th style="text-align: center">Category name</th>
@@ -14,8 +14,8 @@
                     <tbody>
                     @foreach($counts as $count)
                         <tr>
-                            <td style="text-align: center"><a href="/items/search?search=&category={{$count['cat']}}">{{$count['cat']}}</a></td>
-                            <td style="text-align: center">{{$count['count']}}</td>
+                            <td style="text-align: center"><a href="/items/search?search=&category={{$count['cat']}}" class="btn btn-primary btn-sm btn-block">{{$count['cat']}}</a></td>
+                            <td style="text-align: center"><span class="label label-info">{{$count['count']}}</span></td>
                             @foreach($totals as $total)
                                 @if($count['cat_id'] == $total['cat_id'])
                                     <td style="text-align: center">Rs. {{number_format(doubleval($total['total']),2)}}</td>
@@ -30,12 +30,19 @@
 
 
         <div class="row" style="margin-top: 30px">
-            <div class="col-md-4 col-md-offset-4" align="center">
-                <div class="form-group">
-                    <label>Add New Category</label>
-                    <input class="form-control" type="text" id="category" placeholder="new category..." required>
+            <div class="col-md-6 col-md-offset-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-center">
+                        <div class="panel-title">Add new Category</div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input class="form-control" type="text" id="category" placeholder="new category..." required>
+                        </div>
+                        <button class="btn btn-primary" onclick="if(confirm('Are you sure?')) addNewCategory()">Submit</button>
+                    </div>
                 </div>
-                <button class="btn btn-primary" onclick="if(confirm('Are you sure?')) addNewCategory()">Submit</button>
             </div>
         </div>
     </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" style="font-family: sans-serif; margin-bottom: 30px">
+    <div class="container" style="margin-bottom: 30px">
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2" style="margin-bottom: 10px" align="center">
@@ -45,7 +45,7 @@
 
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <table class="table" style="-webkit-filter: drop-shadow(1px 2px 2px gray); margin: 2px; background-color: #fffffe">
+                <table class="table table-bordered table-condensed">
                     <thead>
                     <tr>
                         <th style="text-align: center"> </th>
@@ -61,27 +61,27 @@
                     @if(isset($items))
                         @foreach($items as $item)
                             @if($item->quantity < $item->low)
-                                <tr style="background-color: #C0392B; color: white">
+                                <tr class="bg-danger">
                             @elseif($item->quantity < $item->medium)
-                                <tr style="background-color: #F1C40F; color:black;">
+                                <tr class="bg-warning">
                             @else
-                                <tr style="background-color: #27AE60; color: black">
+                                <tr class="bg-success">
                                     @endif
                                     <td>{{$item->id}}</td>
                                     <td><a href="/item/show/{{$item->id}}" style="color: #1c242a;">{{$item->name}}</a></td>
                                     <td>{{number_format($item->unit_price,2)}}</td>
-                                    <td><kbd>{{$item->cat}}</kbd></td>
-                                    <td><code>{{$item->quantity}} {{$item->uom}}</code></td>
+                                    <td><span class="label label-success">{{$item->cat}}</span></td>
+                                    <td><span class="badge">{{$item->quantity}} {{$item->uom}}</span></td>
                                     <td>
-                                        <button class="btn btn-primary" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')">Restock</button>
+                                        <button class="btn btn-primary btn-sm" onclick="pop('/item/restock?id={{$item->id}}','{{$item->name}}')">Restock</button>
                                     </td>
                                     @if($item->quantity == 0)
                                         <td>
-                                            <button class="btn btn-danger" disabled="">Issue</button>
+                                            <button class="btn btn-danger btn-sm" disabled="">Issue</button>
                                         </td>
                                     @else
                                         <td>
-                                            <button class="btn btn-danger" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')">Issue</button>
+                                            <button class="btn btn-danger btn-sm" onclick="pop('/item/issue?id={{$item->id}}','{{$item->name}}')">Issue</button>
                                         </td>
                                     @endif
                                 </tr>

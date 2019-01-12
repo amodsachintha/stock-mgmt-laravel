@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container" style="font-family: sans-serif; margin-bottom: 50px">
+    <div class="container" style="margin-bottom: 50px">
         @if(isset($months))
             <div class="row" style="margin-bottom: 30px">
                 <div class="col-md-2">
@@ -33,7 +33,7 @@
         @endif
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <table class="table dataTable" id="ledger" style="-webkit-filter: drop-shadow(1px 2px 2px gray); margin: 2px; background-color: #fffffe">
+                <table class="table table table-striped table-bordered" id="ledger">
                     <thead>
                     @if(!isset($paginate))
                         <tr>
@@ -56,7 +56,7 @@
                                 <tr>
                                     <td>{{$line->id}}</td>
                                     <td><a href="/item/show/{{$line->id_item}}">{{$line->item_name}}</a></td>
-                                    <td><kbd>{{$line->cat_name}}</kbd></td>
+                                    <td><span class="label label-info">{{$line->cat_name}}</span></td>
                                     @if($line->in == true)
                                         <td class="bg-success">+ {{$line->quantity}} {{$line->uom}}</td>
                                     @else
@@ -78,11 +78,11 @@
                 @if(isset($totals))
                     <tr>
                         <td  style="text-align: right"><h4>Issuance cost</h4></td>
-                        <td  style="color: #c7254e"><h4>Rs {{$totals['issue_total']}}</h4></td>
+                        <td  ><h4 style="color: #c7254e">Rs {{$totals['issue_total']}}</h4></td>
                     </tr>
                     <tr>
                         <td  style="text-align: right"><h4>Purchase cost</h4></td>
-                        <td  style="color: #559756"><h4>Rs {{$totals['restock_total']}}</h4></td>
+                        <td  class="text-success"><h4 style="color: #559756">Rs {{$totals['restock_total']}}</h4></td>
                     </tr>
                 @endif
             </table>
@@ -99,12 +99,12 @@
                 buttons: [
                     {
                         extend: 'copyHtml5',
-                        text: '<i class="fal fa-clone"></i>',
+                        text: '<i class="far fa-clone"></i>',
                         titleAttr: 'Copy'
                     },
                     {
                         extend: 'excelHtml5',
-                        text: '<i class="fal fa-file-excel"></i>',
+                        text: '<i class="far fa-file-excel"></i>',
                         titleAttr: 'Excel'
                     }
                 ]

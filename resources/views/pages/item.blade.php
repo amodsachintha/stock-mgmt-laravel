@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    <div class="container" style="font-family: sans-serif; margin-bottom: 10px">
+    <div class="container" style="margin-bottom: 10px">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 @if(isset($item))
@@ -116,8 +116,8 @@
                                             @else
                                                 <tr class="bg-danger">
                                                     @endif
-                                                    <td><a href="#" onclick="pop('/ledger/view?id={{$line->id}}','{{$line->id}}')">{{$line->id}}</a></td>
-                                                    <td><kbd>{{$line->cat_name}}</kbd></td>
+                                                    <td><a href="#" onclick="pop('/ledger/view?id={{$line->id}}','{{$line->id}}')" class="btn btn-primary btn-sm">{{$line->id}}</a></td>
+                                                    <td><span class="label label-info">{{$line->cat_name}}</span></td>
                                                     @if($line->in == true)
                                                         <td>+ {{$line->quantity}} {{$line->uom}}</td>
                                                     @else

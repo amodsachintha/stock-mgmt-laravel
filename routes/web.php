@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
@@ -21,7 +19,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 // ITEMS CONTROLLER //
-Route::get('/items/all','ItemsController@index');
+Route::get('/items/all','ItemsController@index')->name('items');
 Route::get('/item/show/{id}','ItemsController@showItem');
 Route::get('/item/add','ItemsController@showAdd');
 Route::post('/item/add','ItemsController@addItem');
@@ -36,7 +34,7 @@ Route::get('/deleted-items','ItemsController@showDeleted');
 
 
 // CATEGORIES CONTROLLER //
-Route::get('/categories/all','CategoriesController@index');
+Route::get('/categories/all','CategoriesController@index')->name('categories');
 Route::post('/categories/add','CategoriesController@add');
 
 

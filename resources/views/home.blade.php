@@ -1,12 +1,18 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container" style="font-family: sans-serif">
+    <div class="container">
 
         <div class="row" align="center" style="margin-bottom: 15px">
             <img src="{{asset('img/logo_text.png')}}" width="500">
-            <h3 style="margin-top: -10px">තොග කළමනාකරණ පද්ධතිය</h3>
+            <h3 style="margin-top: -10px">Inventory Management System</h3>
         </div>
+
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+            </div>
+        </div>
+
 
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
